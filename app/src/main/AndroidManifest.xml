@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.android.alarmmanagerdemo">
 
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -26,7 +28,17 @@
 
         <service
             android:name=".AlarmIntentService"
-            android:exported="false"></service>
+            android:exported="false" />
+
+        <receiver
+            android:name=".MyAirPlaneModeReceiver"
+            android:enabled="true"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.AIRPLANE_MODE"/>
+            </intent-filter>
+
+        </receiver>
     </application>
 
 </manifest>
