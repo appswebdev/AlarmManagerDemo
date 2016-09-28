@@ -4,6 +4,7 @@ import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.app.TimePickerDialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -14,6 +15,7 @@ import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TimePicker;
+import android.widget.Toast;
 
 import org.joda.time.DateTime;
 
@@ -97,9 +99,29 @@ public class MainActivity extends AppCompatActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
+            saveNote();
             return true;
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    int i = 0;
+
+    void saveNote() {
+        SharedPreferences prefs = getSharedPreferences("Notes", MODE_PRIVATE);
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.putString("Note" + i, "Minhal note");
+        i++;
+
+        editor.commit();
+
+    }
+
+    void loadNote() {
+        SharedPreferences prefs = getSharedPreferences("Notes", MODE_PRIVATE);
+        String note = prefs.getString("Note", null);
+        if (note != null)
+            Toast.makeText(MainActivity.this, note, Toast.LENGTH_SHORT).show();
     }
 }
